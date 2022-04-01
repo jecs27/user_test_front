@@ -14,7 +14,12 @@
                        <ContactUser v-if="bDatosContacto" @registroContacto="registroContacto"/>
 
                        <div v-if="bDatosCompletos">
-                           Hola mundo
+                            <v-col>
+                                <v-row><span>Nombre: {{sNombre}} {{sSegundoNombre}} {{sApellidoPaterno}} {{sApellidoMaterno}}</span></v-row>
+                                <v-row><span>Fecha Naciemiento: {{dFechaNacimiento}}</span></v-row>
+                                <v-row><span>Correo: {{sCorreo}}</span></v-row>
+                                <v-row><span>Teléfono: {{sTelefono}}</span></v-row>
+                            </v-col>
                        </div>
                      </v-card-text>
                      <v-card-actions>

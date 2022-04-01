@@ -10,7 +10,8 @@
                     v-model="sCorreo"
                     placeholder="Correo"
                     type="text"
-                    id="sCorreo" >
+                    id="sCorreo" 
+                    :rules="correoRules">
                 </v-text-field>
 
                 <v-text-field
@@ -36,6 +37,10 @@
       data: () => ({
         sCorreo:'',
         sTelefono:'',
+        correoRules: [
+          v => !!v || 'El Correo es requerido',
+          v => /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(v) || 'El correo no es Valido',
+        ],
       }),
       methods: {
         registrarNombre() {
