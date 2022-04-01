@@ -9,12 +9,12 @@
                         <v-toolbar-title>The Rocket Code</v-toolbar-title>
                      </v-toolbar>
                      <v-card-text>
-                       
+                       <DataUser v-if="bNombre" @registroNombre="registroNombre"/>
                      </v-card-text>
                      <v-card-actions>
-                         
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" :disabled="!canLogin" @click="hacerRegistro()">Iniciar</v-btn>
+                        <v-btn  v-if="bRegistro" color="purple lighten-1" text  @click="showRegistro()">Registrarse</v-btn>
+                            <v-spacer></v-spacer>
+                        <v-btn color="primary" :disabled="!allData" @click="hacerRegistro()">Iniciar</v-btn>
                      </v-card-actions>
                   </v-card>
                </v-flex>
@@ -25,30 +25,71 @@
 </template>
 
 <script>
+import SnackBar from '../components/SnackBar.vue';
+import LoadingDialog from '../components/LoadingDialog.vue';
+import DataUser from '../components/DataUser.vue';
+
+
 export default {
-    name: 'Login|Registro',
+    name: 'registroUser',
+    components:{
+      SnackBar,
+      LoadingDialog,
+      DataUser
+    },
     data: () => ({
-        sCorreoLogin:'',
+        bRegistro:true,
+        bNombre: false,
+        bFechaNacimiento: false,
+        bDatosContacto: false,
 
-        sNombre:'',
-        sSegundoNombre:'',
-        sApellidoPaterno:'',
-        sApellidoMaterno:'',
+        sNombre: '',
+        sSegundoNombre: '',
+        sApellidoPaterno: '',
+        sApellidoMaterno: '',
 
-        sDiaNacimiento:'',
-        sMesNacimiento:'',
-        sAnioNacimiento:'',
+        sDiaNacimiento: '',
+        sMesNacimiento: '',
+        sAnioNacimiento: '',
 
-        sCorreo:'',
-
-        sTelefono:''
+        sCorreo: '',
+        sTelefono: ''
 
     }),
     props: {
         source: String,
     },
     methods:{
+        registroNombre(data) {
+            this.sNombre = data.sNombre;
+            this.sSegundoNombre = data.sSegundoNombre
 
+            if(data.sNombre != '' && data.sApellidoPaterno != ''){
+                this.showFechaNacimiento();
+            }
+        },
+        showRegistro(){
+            this.bRegistro = false;
+            this.bNombre = true;
+        },
+        showFechaNacimiento(){
+            this.bNombre = false;
+            this.bFechaNacimiento = true;
+        },
+        showDatosContacto(){
+            this.bNombre = false;
+            this.bFechaNacimiento = true;
+            this.bDatosContacto = true;
+        },
+    },
+    computed:{
+        allData(){
+            return(
+                this.sNombre != '' &&
+                this.sSegundoNombre != '' 
+            ); 
+        },
+       
     },
 }
 </script>
