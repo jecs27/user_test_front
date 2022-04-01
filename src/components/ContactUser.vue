@@ -3,7 +3,7 @@
         <v-form>
             <v-card class="elevation-1">
                 <v-toolbar dark color="secondary">
-                <v-toolbar-title>¿Cúal es tu nombre?</v-toolbar-title>
+                <v-toolbar-title>Datos de contacto</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                 <v-text-field

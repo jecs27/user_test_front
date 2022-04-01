@@ -7,14 +7,14 @@ import '@babel/polyfill'
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import VueCookies from 'vue-cookies'
+import VueCookies from 'vue-cookies';
+import VueCryptojs from 'vue-cryptojs';
 
 Vue.config.productionTip = false
-
 Vue.use(VueAxios, axios);
-Vue.config.productionTip = false
-Vue.use(VueCookies);
 
+Vue.use(VueCryptojs);
+Vue.use(VueCookies);
 new Vue({
     router,
     store,
