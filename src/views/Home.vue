@@ -11,11 +11,16 @@
                      <v-card-text>
                        <DataUser v-if="bNombre" @registroNombre="registroNombre"/>
                        <BirthDateUser v-if="bFechaNacimiento" @registroFecha="registroFecha"/>
+                       <ContactUser v-if="bDatosContacto" @registroContacto="registroContacto"/>
+
+                       <div v-if="bDatosCompletos">
+                           Hola mundo
+                       </div>
                      </v-card-text>
                      <v-card-actions>
-                        <v-btn  v-if="bRegistro" color="purple lighten-1" text  @click="showRegistro()">Registrarse</v-btn>
+                        <v-btn  v-if="!bRegistro" color="purple lighten-1" text  @click="showRegistro()">Registrarse</v-btn>
                             <v-spacer></v-spacer>
-                        <v-btn color="primary" :disabled="!allData" @click="hacerRegistro()">Iniciar</v-btn>
+                        <v-btn color="primary" v-if="allData" @click="hacerRegistro()">Iniciar</v-btn>
                      </v-card-actions>
                   </v-card>
                </v-flex>
@@ -30,6 +35,7 @@ import SnackBar from '../components/SnackBar.vue';
 import LoadingDialog from '../components/LoadingDialog.vue';
 import DataUser from '../components/DataUser.vue';
 import BirthDateUser from '../components/BirthDateUser.vue';
+import ContactUser from '../components/ContactUser.vue';
 
 
 export default {
@@ -38,10 +44,12 @@ export default {
       SnackBar,
       LoadingDialog,
       DataUser,
-      BirthDateUser
+      BirthDateUser,
+      ContactUser
     },
     data: () => ({
-        bRegistro:true,
+        bRegistro: false,
+        bDatosCompletos: false,
         bNombre: false,
         bFechaNacimiento: false,
         bDatosContacto: false,
@@ -64,7 +72,9 @@ export default {
         registroNombre(data) {
             if(data.sNombre != '' && data.sApellidoPaterno != ''){
                 this.sNombre = data.sNombre;
-                this.sSegundoNombre = data.sSegundoNombre
+                this.sSegundoNombre = data.sSegundoNombre;
+                this.sApellidoPaterno = data.sApellidoPaterno;
+                this.sApellidoMaterno = data.sApellidoMaterno;
                 this.showFechaNacimiento();
             }
         },
@@ -74,8 +84,15 @@ export default {
                 this.showDatosContacto();
             }
         },
+        registroContacto(data){
+            if(data.sCorreo != '' && data.sTelefono != ''){
+                this.sCorreo = data.sCorreo;
+                this.sTelefono = data.sTelefono;
+                this.showFinalDatos();
+            }
+        },
         showRegistro(){
-            this.bRegistro = false;
+            this.bRegistro = true;
             this.bNombre = true;
         },
         showFechaNacimiento(){
@@ -84,15 +101,25 @@ export default {
         },
         showDatosContacto(){
             this.bNombre = false;
-            this.bFechaNacimiento = true;
+            this.bFechaNacimiento = false;
             this.bDatosContacto = true;
         },
+        showFinalDatos(){
+            this.bNombre = false;
+            this.bFechaNacimiento = false;
+            this.bDatosContacto = false;
+            this.bDatosCompletos = true;
+
+        }
     },
     computed:{
         allData(){
             return(
                 this.sNombre != '' &&
-                this.sSegundoNombre != '' 
+                this.sApellidoPaterno != '' &&
+                this.dFechaNacimiento != '' &&
+                this.sCorreo != '' &&
+                this.sTelefono != ''
             ); 
         },
        

@@ -3,7 +3,7 @@
         <v-form>
             <v-card class="elevation-1">
                 <v-toolbar dark color="secondary">
-                <v-toolbar-title>¿Cùal es tu fecha de nacimiento?</v-toolbar-title>
+                <v-toolbar-title>¿Cúal es tu fecha de nacimiento?</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                     <v-menu ref="menu" v-model="menu" :close-on-content-click="false"
@@ -29,7 +29,7 @@
                 <v-card-actions>
                     
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="registrarFecha()">Siguiente</v-btn>
+                <v-btn color="primary" :disabled="!enableNext" @ @click="registrarFecha()">Siguiente</v-btn>
                 </v-card-actions>
             </v-card>            
         </v-form>
@@ -54,6 +54,14 @@
                 dFechaNacimiento: this.dFechaNacimiento
             });
         },
+    },
+    computed:{
+        enableNext(){
+            return(
+                this.dFechaNacimiento != ''
+            ); 
+        },
+       
     },
   }
 </script>
