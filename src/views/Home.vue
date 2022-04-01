@@ -10,6 +10,7 @@
                      </v-toolbar>
                      <v-card-text>
                        <DataUser v-if="bNombre" @registroNombre="registroNombre"/>
+                       <BirthDateUser v-if="bFechaNacimiento" @registroFecha="registroFecha"/>
                      </v-card-text>
                      <v-card-actions>
                         <v-btn  v-if="bRegistro" color="purple lighten-1" text  @click="showRegistro()">Registrarse</v-btn>
@@ -28,6 +29,7 @@
 import SnackBar from '../components/SnackBar.vue';
 import LoadingDialog from '../components/LoadingDialog.vue';
 import DataUser from '../components/DataUser.vue';
+import BirthDateUser from '../components/BirthDateUser.vue';
 
 
 export default {
@@ -35,7 +37,8 @@ export default {
     components:{
       SnackBar,
       LoadingDialog,
-      DataUser
+      DataUser,
+      BirthDateUser
     },
     data: () => ({
         bRegistro:true,
@@ -47,10 +50,8 @@ export default {
         sSegundoNombre: '',
         sApellidoPaterno: '',
         sApellidoMaterno: '',
-
-        sDiaNacimiento: '',
-        sMesNacimiento: '',
-        sAnioNacimiento: '',
+        
+        dFechaNacimiento:'',
 
         sCorreo: '',
         sTelefono: ''
@@ -61,11 +62,16 @@ export default {
     },
     methods:{
         registroNombre(data) {
-            this.sNombre = data.sNombre;
-            this.sSegundoNombre = data.sSegundoNombre
-
             if(data.sNombre != '' && data.sApellidoPaterno != ''){
+                this.sNombre = data.sNombre;
+                this.sSegundoNombre = data.sSegundoNombre
                 this.showFechaNacimiento();
+            }
+        },
+        registroFecha(data){
+            if(data.dFechaNacimiento != ''){
+                this.dFechaNacimiento = data.dFechaNacimiento;
+                this.showDatosContacto();
             }
         },
         showRegistro(){
